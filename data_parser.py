@@ -277,7 +277,7 @@ def load_data(task:str,
               normalize: Optional[Union[bool, StandardScaler]] = True,
               win_len=200,
               hop_len=100,
-              save=False,
+              save=True,
               segment_train=True,
               ids: Optional[Dict[str, List[str]]] = None,
               data_file_suffix: Optional[str]=None) \
@@ -390,7 +390,7 @@ def load_personalisation_data(paths,
         all_subject_devels = [s for s in partition2subject['devel'] if s.split("_")[0]==test_subject]
         all_subject_tests = [s for s in partition2subject['test'] if s.split("_")[0]==test_subject]
         data.append(load_data(task=PERSONALISATION, feature=feature, emo_dim=emo_dim, normalize=normalizer,
-                              win_len=win_len, hop_len=hop_len, save=False, segment_train=segment_train,
+                              win_len=win_len, hop_len=hop_len, save=True, segment_train=segment_train,
                               ids=({'train': [f'{test_subject}_train'], 'devel': all_subject_devels,
                                     'test': all_subject_tests}),
                               paths=paths))

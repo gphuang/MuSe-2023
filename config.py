@@ -1,4 +1,4 @@
-import os
+import os, sys
 from pathlib import Path
 
 import torch
@@ -6,7 +6,9 @@ import torch
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # adjust your paths here.
-BASE_PATH = os.path.join(Path(__file__).parent.parent, 'MuSe-2023', 'packages')
+BASE_PATH = '/scratch/elec/puhe/c/muse_2023/' 
+# todo: '/teamwork/t40511/muse_2023/'
+# os.path.join(Path(__file__).parent.parent, 'MuSe-2023', 'packages')
 
 MIMIC = 'mimic'
 HUMOR = 'humor'
@@ -54,9 +56,12 @@ MIMIC_LABELS = ['Approval_', 'Disappointment_', 'Uncertainty_']
 # personalisation labels
 AROUSAL = 'physio-arousal'
 VALENCE = 'valence'
-PERSONALISATION_DIMS = [AROUSAL, VALENCE]
+BPM = 'BPM_normalized'
+ECG = 'ECG_normalized'
+RESP = 'resp_normalized'
+PERSONALISATION_DIMS = [AROUSAL, VALENCE, BPM, RESP, ECG]
 
-OUTPUT_PATH = os.path.join(BASE_PATH, 'results')
+OUTPUT_PATH = os.path.join('/scratch/work/huangg5/muse/MuSe-2023', 'results')
 LOG_FOLDER = os.path.join(OUTPUT_PATH, 'log_muse')
 DATA_FOLDER = os.path.join(OUTPUT_PATH, 'data_muse')
 MODEL_FOLDER = os.path.join(OUTPUT_PATH, 'model_muse')

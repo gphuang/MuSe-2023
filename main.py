@@ -92,8 +92,6 @@ def get_loss_fn(task):
         return MSELossWrapper(reduction='mean'), 'MSE'
 
 
-
-
 def get_eval_fn(task):
     if task == PERSONALISATION:
         return calc_ccc, 'CCC'
