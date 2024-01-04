@@ -4,7 +4,7 @@
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
 #SBATCH --output=logs/c3_av_to_bio_%A.out
-#SBATCH --job-name=muse_c3_av
+#SBATCH --job-name=muse_c3_
 #SBATCH -n 1
 
 source activate data2vec

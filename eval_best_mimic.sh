@@ -1,4 +1,4 @@
-# best audio - from results/logs_muse?
+# best audio - from results/logs_muse
 python3 main.py --task mimic \
         --eval_model RNN_2023-12-21-09-53_[w2v-msp]_[128_2_False_64]_[0.001_256] \
         --feature w2v-msp --eval_seed 101 --predict

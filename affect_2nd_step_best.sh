@@ -49,6 +49,37 @@ python3 personalisation.py --model_id RNN_2023-12-21-09-46_[facenet]_[physio-aro
                         --lr 0.001 --early_stopping_patience 10 --epochs 100 \
                         --win_len 10 --hop_len 5 --use_gpu
 
+# BPM
+python3 personalisation.py --model_id RNN_2024-01-03-12-36_[BPM]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
+                --normalize --checkpoint_seed 105 \
+                --emo_dim physio-arousal --lr 0.002 \
+                --early_stopping_patience 10 \
+                --epochs 100 --win_len 10 --hop_len 5 \
+                --use_gpu
+# ECG
+python3 personalisation.py --model_id RNN_2024-01-03-12-42_[ECG]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
+                --normalize --checkpoint_seed 104 \
+                --emo_dim physio-arousal --lr 0.002 \
+                --early_stopping_patience 10 \
+                --epochs 100 --win_len 10 --hop_len 5 \
+                --use_gpu
+
+# resp
+python3 personalisation.py --model_id RNN_2023-12-21-14-55_[resp]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
+                --normalize --checkpoint_seed 103 \
+                --emo_dim physio-arousal --lr 0.002 \
+                --early_stopping_patience 10 \
+                --epochs 100 --win_len 10 --hop_len 5 \
+                --use_gpu
+
+# biosignals
+python3 personalisation.py --model_id RNN_2023-12-21-15-02_[biosignals]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
+                --normalize --checkpoint_seed 104 \
+                --emo_dim physio-arousal --lr 0.002 \
+                --early_stopping_patience 10 \
+                --epochs 100 --win_len 10 --hop_len 5 \
+                --use_gpu
+
 ### VALENCE 
 
 # egemaps
@@ -87,3 +118,35 @@ python3 personalisation.py --model_id RNN_2023-12-21-10-19_[facenet]_[valence]_[
                         --checkpoint_seed 102 --emo_dim valence \
                         --lr 0.002 --early_stopping_patience 10 --epochs 100 \
                         --win_len 10 --hop_len 5 --use_gpu
+
+# BPM 
+python3 personalisation.py --model_id RNN_2024-01-03-12-39_[BPM]_[valence]_[256_4_False_64]_[0.002_256] \
+                --normalize --checkpoint_seed 103 \
+                --emo_dim valence --lr 0.001 \
+                --early_stopping_patience 10 \
+                --epochs 100 --win_len 20 --hop_len 10 \
+                --use_gpu
+
+# ECG
+python3 personalisation.py --model_id RNN_2024-01-03-12-45_[ECG]_[valence]_[256_4_False_64]_[0.002_256] \
+                --normalize --checkpoint_seed 105 \
+                --emo_dim valence --lr 0.001 \
+                --early_stopping_patience 10 \
+                --epochs 100 --win_len 20 --hop_len 10 \
+                --use_gpu
+
+# resp
+python3 personalisation.py --model_id RNN_2023-12-21-14-59_[resp]_[valence]_[256_4_False_64]_[0.002_256] \
+                --normalize --checkpoint_seed 103 \
+                --emo_dim valence --lr 0.001 \
+                --early_stopping_patience 10 \
+                --epochs 100 --win_len 20 --hop_len 10 \
+                --use_gpu
+
+# biosignals
+python3 personalisation.py --model_id RNN_2023-12-21-15-05_[biosignals]_[valence]_[256_4_False_64]_[0.002_256] \
+                --normalize --checkpoint_seed 103 \
+                --emo_dim valence --lr 0.001 \
+                --early_stopping_patience 10 \
+                --epochs 100 --win_len 20 --hop_len 10 \
+                --use_gpu                        
