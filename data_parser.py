@@ -123,6 +123,12 @@ def load_humor_subject(feature, subject_id, normalizer) -> Tuple[List[np.ndarray
         label_features = segment_features[(segment_features.timestamp >= start) &
                                           (segment_features.timestamp < end)].iloc[:, feature_idx:].values
         # imputation?
+        
+        # debug
+        print(label_features.shape)
+        #import sys 
+        #sys.exit(0)
+        
         if label_features.shape[0] == 0:
             label_features = np.zeros((1, feature_dim))
         features.append(label_features)
@@ -351,7 +357,7 @@ def load_data(task:str,
             data[partition]['meta'].extend(metas)
 
     if save:  # save loaded and preprocessed data
-        print('Saving data...')
+        print(f'Saving data to {data_file}...')
         pickle.dump(data, open(data_file, 'wb'))
 
     return data

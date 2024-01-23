@@ -1,3 +1,14 @@
+#!/bin/bash
+#SBATCH --time=05:00:00
+#SBATCH --mem-per-cpu=4G
+#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=6
+#SBATCH --output=logs/c3_eval_%A.out
+#SBATCH --job-name=muse_c3
+#SBATCH -n 1
+
+source activate data2vec
+
 # AROUSAL
 
 # A

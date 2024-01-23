@@ -7,44 +7,48 @@
 #SBATCH --job-name=muse_c3
 #SBATCH -n 1
 
-# AROUSAL
+source activate data2vec
 
-# A
+# todo: after personalisation & c3_avfeat_to_bio 2nd step, update personalised models
+
+### AROUSAL
+
+# audio
 python3 personalisation.py --model_id RNN_2023-12-21-09-06_[egemaps]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
         --eval_personalised 101_personalised_2023-04-11-11-34-52 \
-        --normalize --emo_dim physio-arousal
+        --normalize --emo_dim physio-arousal --use_gpu
 
-# V
+# video
 python3 personalisation.py --model_id RNN_2023-04-11-09-41_[facenet]_[physio-arousal]_[256_1_False_64]_[0.001_256] \
         --eval_personalised 101_personalised_2023-04-11-12-03-26 \
-        --emo_dim physio-arousal
+        --emo_dim physio-arousal --use_gpu
 
-# B
+# biosignal
 
-# VALENCE
+### VALENCE
 
-# A
+# audio
 python3 personalisation.py --model_id RNN_2023-04-11-09-11_[egemaps]_[valence]_[256_4_False_64]_[0.002_256] \
         --eval_personalised 102_personalised_2023-04-11-14-36-31 \
-        --normalize --emo_dim valence
+        --normalize --emo_dim valence --use_gpu
 
-# V
+# video
 python3 personalisation.py --model_id RNN_2023-04-11-09-34_[facenet]_[valence]_[128_2_False_64]_[0.005_256] \
         --eval_personalised 104_personalised_2023-04-11-15-04-28 \
-        --emo_dim valence
+        --emo_dim valence --use_gpu
 
-# B
+# biosignal
 
-# BPM_normalized
+### BPM_normalized
 
-# A
+# audio
 
-# V
+# video
 
-# ECG_normalized
+### ECG_normalized
 
-# A
+# audio
 
-# V
+# video
 
-# resp_normalized
+### resp_normalized

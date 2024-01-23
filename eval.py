@@ -150,6 +150,12 @@ def evaluate(task, model, data_loader, loss_fn, eval_fn, use_gpu=False, predict=
             if predict:
                 full_metas.append(metas.tolist()[:cutoff])
 
+            # debug
+            # print(max(preds.squeeze().numpy().tolist()))
+            # print(min(preds.squeeze().numpy().tolist()))
+            # print(set(labels.squeeze().numpy().tolist()))
+            # print(metas)
+            
             loss = loss_fn(preds.squeeze(-1), labels.squeeze(-1), feature_lens)
 
             losses += loss.item() * batch_size

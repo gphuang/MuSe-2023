@@ -18,7 +18,6 @@ from model import Model
 from train import train_model
 from utils import Logger, seed_worker, log_results
 
-
 def parse_args():
 
     parser = argparse.ArgumentParser(description='MuSe 2023.')

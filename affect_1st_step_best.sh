@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH --time=20:30:00
+#SBATCH --time=10:30:00
 #SBATCH --mem-per-cpu=4G
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
-#SBATCH --output=logs/c3_1st_step_%A.out
-#SBATCH --job-name=muse_c3_1
+#SBATCH --output=logs/c5_1st_step_%A.out
+#SBATCH --job-name=muse_c5_1
 #SBATCH -n 1
 
 source activate data2vec

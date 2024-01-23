@@ -1,18 +1,18 @@
 #!/bin/bash
-#SBATCH --time=01:30:00
+#SBATCH --time=10:30:00
 #SBATCH --mem-per-cpu=4G
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
-#SBATCH --output=logs/c3_av_to_bio_%A.out
-#SBATCH --job-name=muse_c3_
+#SBATCH --output=logs/c5_1st_step_%A.out
+#SBATCH --job-name=muse_c5_1
 #SBATCH -n 1
 
 source activate data2vec
 
-### av-feats for BIOSIGNALS
+### biosignals mapping
 # todo set hyperparameter for each feature type
-# todo model_id
-for feat in egemaps ds w2v-msp faus vit facenet 
+
+for feat in BPM ECG resp 
 do
 for biosignal in BPM_normalized ECG_normalized resp_normalized
 do
@@ -24,5 +24,3 @@ do
                     --use_gpu
 done 
 done
-
-
