@@ -37,7 +37,7 @@ class MuSeDataset(Dataset):
         self.labels = [torch.tensor(l, dtype=torch.float) for l in labels]
         self.metas = [np.pad(meta, pad_width=((0,max_label_len-meta.shape[0]),(0,0)), mode='empty') for meta in metas]
 
-        self.metas = [m.astype(np.object).tolist() for m in self.metas]
+        self.metas = [m.astype(object).tolist() for m in self.metas]
         pass
 
     def get_feature_dim(self):

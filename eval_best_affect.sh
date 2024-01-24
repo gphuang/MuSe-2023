@@ -9,6 +9,8 @@
 
 source activate data2vec
 
+# ls results/model_muse/personalisation/*arousal*/*personalised_*
+
 # AROUSAL
 
 # A

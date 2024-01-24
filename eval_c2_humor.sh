@@ -1,13 +1,15 @@
 #!/bin/bash
-#SBATCH --time=05:00:00
-#SBATCH --mem-per-cpu=4G
+#SBATCH --time=00:01:00
+#SBATCH --mem-per-cpu=1G
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
 #SBATCH --output=logs/c2_eval_%A.out
 #SBATCH --job-name=muse_c2
 #SBATCH -n 1
 
-source activate data2vec
+module load miniconda
+
+source activate muse
 
 # audio
 python3 main.py --task humor \

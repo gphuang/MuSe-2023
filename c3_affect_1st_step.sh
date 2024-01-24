@@ -9,8 +9,7 @@
 
 source activate data2vec
 
-### biosignals for AROUSAL & VALENCE same as 'personalisation_1st_step_best.sh' with avfeats
-# todo set hyperparameter for each feature type
+### avfeats & biosignals for AROUSAL & VALENCE. avfeats same as 'personalisation_1st_step_best.sh'
 
 ### AROUSAL
 

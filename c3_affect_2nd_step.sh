@@ -65,7 +65,7 @@ python3 personalisation.py --model_id RNN_2024-01-03-12-42_[ECG]_[physio-arousal
                 --use_gpu
 
 # resp
-python3 personalisation.py --model_id RNN_2023-12-21-14-55_[resp]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
+python3 personalisation.py --model_id RNN_2024-01-24-15-28_[resp]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
                 --normalize --checkpoint_seed 103 \
                 --emo_dim physio-arousal --lr 0.002 \
                 --early_stopping_patience 10 \
@@ -136,7 +136,7 @@ python3 personalisation.py --model_id RNN_2024-01-03-12-45_[ECG]_[valence]_[256_
                 --use_gpu
 
 # resp
-python3 personalisation.py --model_id RNN_2023-12-21-14-59_[resp]_[valence]_[256_4_False_64]_[0.002_256] \
+python3 personalisation.py --model_id RNN_2024-01-24-15-31_[resp]_[valence]_[256_4_False_64]_[0.002_256] \
                 --normalize --checkpoint_seed 103 \
                 --emo_dim valence --lr 0.001 \
                 --early_stopping_patience 10 \

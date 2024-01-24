@@ -1,18 +1,20 @@
 #!/bin/bash
-#SBATCH --time=05:00:00
-#SBATCH --mem-per-cpu=4G
+#SBATCH --time=00:01:00
+#SBATCH --mem-per-cpu=1G
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
 #SBATCH --output=logs/c1_eval_%A.out
 #SBATCH --job-name=muse_c1
 #SBATCH -n 1
 
-source activate data2vec
+module load miniconda
 
-# audio - from results/logs_muse
+source activate muse
+
+# audio
 python3 main.py --task mimic \
         --eval_model RNN_2023-12-27-16-46_[egemaps]_[256_2_False_64]_[0.001_256] \
-        --feature egemaps --eval_seed 101 --predict --use_gpu  # --cache 
+        --feature egemaps --eval_seed 101 --predict --use_gpu # --cache 
 
 python3 main.py --task mimic \
         --eval_model RNN_2023-12-27-16-53_[deepspectrum]_[256_4_False_64]_[0.0005_256] \
