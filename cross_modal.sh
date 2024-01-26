@@ -2,7 +2,9 @@
 # conda create -n muse python=3.10
 # conda activate muse
 # conda install pip
-# pip install -r requirements.txt
+# conda clean --all
+# pip cache purge
+# pip install -r requirements.txt --no-cache-dir
 
 ## 0. Data exploration
 # - feat-feat, feat-label correlation analysis?
@@ -27,11 +29,11 @@
 
 ## 3. Evaluate '--predict' CodaLab
 # - rebuild muse conda env
-# - missing resp model from c3_step1, 27586965 c3_step2, and eval_c3 
 # gp is here
-# eval_c1_mimic.sh # DONE  
-# eval_c2_humor.sh # 27587995 
-# eval_c3_affect.sh # DONE 
+# eval_c1_mimic.sh # done   
+# eval_c2_humor.sh # 27641193 cpu 
+# eval_c3_affect.sh # done 
+# eval_c4_inversion.sh # done
 
 ## 4. Fusion/Cross-modal/Multi-modal
 # av-feats, derived emotion_values, derived biosignals to emotion_class (c1)

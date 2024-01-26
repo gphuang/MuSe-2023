@@ -7,7 +7,9 @@
 #SBATCH --job-name=muse_c1
 #SBATCH -n 1
 
-source activate data2vec
+module load miniconda
+
+source activate muse
 
 python3 main.py --task mimic --feature egemaps  --normalize \
                 --model_dim 256 --rnn_n_layers 2 --lr 0.001 --rnn_dropout 0.5  \

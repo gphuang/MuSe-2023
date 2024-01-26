@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --time=00:01:00
-#SBATCH --mem-per-cpu=1G
+#SBATCH --time=05:30:00
+#SBATCH --mem-per-cpu=4G
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
 #SBATCH --output=logs/c1_eval_%A.out
@@ -14,7 +14,7 @@ source activate muse
 # audio
 python3 main.py --task mimic \
         --eval_model RNN_2023-12-27-16-46_[egemaps]_[256_2_False_64]_[0.001_256] \
-        --feature egemaps --eval_seed 101 --predict --use_gpu # --cache 
+        --feature egemaps --normalize --eval_seed 101 --predict --cache --use_gpu #  
 
 python3 main.py --task mimic \
         --eval_model RNN_2023-12-27-16-53_[deepspectrum]_[256_4_False_64]_[0.0005_256] \
@@ -31,7 +31,7 @@ python3 main.py --task mimic \
 
 python3 main.py --task mimic \
         --eval_model RNN_2023-12-27-18-15_[vit]_[256_4_True_64]_[0.001_256] \
-        --feature vit --eval_seed 102 --predict --use_gpu
+        --feature vit --normalize --eval_seed 102 --predict --use_gpu
 
 # text
 python3 main.py --task mimic \

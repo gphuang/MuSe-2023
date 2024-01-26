@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --time=00:01:00
-#SBATCH --mem-per-cpu=1G
+#SBATCH --time=05:30:00
+#SBATCH --mem-per-cpu=4G
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
 #SBATCH --output=logs/c3_eval_%A.out
@@ -16,7 +16,7 @@ source activate muse
 # egemaps
 python3 main.py --task personalisation \
         --eval_model RNN_2023-12-21-09-06_[egemaps]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
-        --feature egemaps --predict --eval_seed  101 --use_gpu  # --cache 
+        --feature egemaps --normalize --predict --eval_seed  101 --cache  --use_gpu  # 
 
 # ds
 python3 main.py --task personalisation \
@@ -36,7 +36,7 @@ python3 main.py --task personalisation \
 # vit 
 python3 main.py --task personalisation \
         --eval_model RNN_2023-12-21-09-40_[vit]_[physio-arousal]_[256_4_True_64]_[0.005_256] --normalize \
-        --feature vit --predict --eval_seed 105 --use_gpu  
+        --feature vit --normalize --predict --eval_seed 105 --use_gpu  
  
 # facenet 
 python3 main.py --task personalisation \
@@ -71,7 +71,7 @@ python3 main.py --task personalisation \
 # egemaps
 python3 main.py --task personalisation \
         --eval_model RNN_2023-12-21-09-50_[egemaps]_[valence]_[256_4_False_64]_[0.002_256] --normalize \
-        --feature egemaps --predict --eval_seed 101 --use_gpu  
+        --feature egemaps --normalize --predict --eval_seed 101 --use_gpu  
 
 # ds
 python3 main.py --task personalisation \
@@ -93,7 +93,7 @@ python3 main.py --task personalisation \
 # vit 
 python3 main.py --task personalisation \
         --eval_model RNN_2023-12-21-10-13_[vit]_[valence]_[128_4_True_64]_[0.001_256] --normalize \
-        --feature vit --predict --eval_seed 103 --use_gpu 
+        --feature vit --normalize --predict --eval_seed 103 --use_gpu 
 
 
 # facenet 

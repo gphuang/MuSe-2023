@@ -7,14 +7,14 @@
 #SBATCH --job-name=muse_c4
 #SBATCH -n 1
 
-source activate data2vec
+module load miniconda
 
-#### --model_id and --checkpoint_seed must be adapted accordingly
+source activate muse
 
 #### BPM_normalized 
 
 # egemaps
-python3 personalisation.py --model_id RNN_2023-12-21-14-55_[egemaps]_[BPM_normalized]]_[256_4_False_64]_[0.002_256] \
+python3 personalisation.py --model_id RNN_2023-12-21-14-55_[egemaps]_[BPM_normalized]_[256_4_False_64]_[0.002_256] \
                             --normalize --checkpoint_seed 105 --emo_dim BPM_normalized  \
                             --lr 0.002 --early_stopping_patience 10 \
                             --epochs 100 --win_len 10 --hop_len 5 \

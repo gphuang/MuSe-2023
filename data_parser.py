@@ -98,7 +98,9 @@ def load_humor_subject(feature, subject_id, normalizer) -> Tuple[List[np.ndarray
     label_path = PATH_TO_LABELS[HUMOR]
     label_files = sorted(glob(os.path.join(label_path, subject_id + '/*.csv')))
     assert len(label_files) > 0, f'Error: no available humor label files for coach "{subject_id}": "{label_files}".'
-    label_df = pd.concat([pd.read_csv(label_file) for label_file in label_files])
+    label_df = pd.concat([pd.read_csv(label_file).fillna(value = 0) for label_file in label_files])
+    # keep_default_na=False; fillna(value = 0) avoid empty csv cell to be read as 'nan', which cause error in loss calculation
+    print(set(label_df['value'].values))
 
     # idx of the data frame (column) where features start
     feature_idx = 2
@@ -123,11 +125,6 @@ def load_humor_subject(feature, subject_id, normalizer) -> Tuple[List[np.ndarray
         label_features = segment_features[(segment_features.timestamp >= start) &
                                           (segment_features.timestamp < end)].iloc[:, feature_idx:].values
         # imputation?
-        
-        # debug
-        print(label_features.shape)
-        #import sys 
-        #sys.exit(0)
         
         if label_features.shape[0] == 0:
             label_features = np.zeros((1, feature_dim))

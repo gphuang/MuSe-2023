@@ -7,7 +7,9 @@
 #SBATCH --job-name=muse_c5_1
 #SBATCH -n 1
 
-source activate data2vec
+module load miniconda
+
+source activate muse
 
 ### biosignals mapping
 # todo set hyperparameter for each feature type

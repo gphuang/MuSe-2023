@@ -7,7 +7,9 @@
 #SBATCH --job-name=muse_c5_2
 #SBATCH -n 1
 
-source activate data2vec
+module load miniconda
+
+source activate muse
 
 #### --model_id and --checkpoint_seed must be adapted accordingly
 
