@@ -10,6 +10,10 @@ BASE_PATH = '/scratch/elec/puhe/c/muse_2023/'
 # todo: '/teamwork/t40511/muse_2023/'
 # os.path.join(Path(__file__).parent.parent, 'MuSe-2023', 'packages')
 
+RNN = 'RNN'
+CRNN = 'CRNN'
+MODEL_TYPES = [RNN, CRNN]
+
 MIMIC = 'mimic'
 HUMOR = 'humor'
 PERSONALISATION = 'personalisation'
