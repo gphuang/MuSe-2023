@@ -26,12 +26,12 @@
 # - how biosignals & emotion_values are 'personalized'?
 # - view loss vs. feat, acc. vs. feat
 # - view training history? loss vs. feat, acc. vs. feat
+# - c3.5 hyperparameter grid search for bpm ecg resp for arousal & valence
 
 ## 3. Evaluate '--predict' CodaLab
 # - rebuild muse conda env
-# gp is here
 # eval_c1_mimic.sh # done   
-# eval_c2_humor.sh # 27641193 cpu 
+# eval_c2_humor.sh # done
 # eval_c3_affect.sh # done 
 # eval_c4_inversion.sh # done
 
