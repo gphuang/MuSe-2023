@@ -3,8 +3,9 @@ import torch
 import torch.nn as nn
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
 import torch.nn.functional as F
-from config import ACTIVATION_FUNCTIONS, device
 
+from config import ACTIVATION_FUNCTIONS, device
+from attention import TemporalAttn, SpatialAttn
 
 class RNN(nn.Module):
     def __init__(self, d_in, d_out, n_layers=1, bi=True, dropout=0.2, n_to_1=False):
@@ -65,8 +66,11 @@ class Model(nn.Module):
         self.inp = nn.Linear(params.d_in, params.model_dim, bias=False)
         
         # TODO
-        # CRNN
-
+        # self.lstm
+        # self.cnn
+        # self.attn = SpatialAttn(in_features=params.model_dim)
+        self.attn = TemporalAttn(hidden_size=params.model_dim)
+        
         self.encoder = RNN(params.model_dim, params.model_dim, n_layers=params.rnn_n_layers, bi=params.rnn_bi,
                            dropout=params.rnn_dropout, n_to_1=params.n_to_1)
 
@@ -75,8 +79,9 @@ class Model(nn.Module):
         self.final_activation = ACTIVATION_FUNCTIONS[params.task]()
 
     def forward(self, x, x_len):
-        x = self.inp(x)
+        x = self.inp(x) 
         x = self.encoder(x, x_len)
+        x = self.attn(x)
         y = self.out(x)
         activation = self.final_activation(y)
         return activation, x

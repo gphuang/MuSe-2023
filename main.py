@@ -9,7 +9,7 @@ import torch
 from dateutil import tz
 
 import config
-from config import MODEL_TYPES, RNN, CRNN
+from config import MODEL_TYPES, RNN, AttnRNN
 from config import TASKS, PERSONALISATION, HUMOR, MIMIC, AROUSAL, VALENCE, PERSONALISATION_DIMS
 from data_parser import load_data
 from dataset import MuSeDataset, custom_collate_fn

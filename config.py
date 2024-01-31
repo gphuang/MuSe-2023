@@ -11,8 +11,8 @@ BASE_PATH = '/scratch/elec/puhe/c/muse_2023/'
 # os.path.join(Path(__file__).parent.parent, 'MuSe-2023', 'packages')
 
 RNN = 'RNN'
-CRNN = 'CRNN'
-MODEL_TYPES = [RNN, CRNN]
+AttnRNN = 'AttnRNN'
+MODEL_TYPES = [RNN, AttnRNN]
 
 MIMIC = 'mimic'
 HUMOR = 'humor'
