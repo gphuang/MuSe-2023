@@ -68,9 +68,8 @@ class Model(nn.Module):
         # TODO
         # self.lstm
         # self.cnn
-        # self.attn = SpatialAttn(in_features=params.model_dim)
-        self.attn = TemporalAttn(hidden_size=params.model_dim)
-        
+        # self.attn
+                
         self.encoder = RNN(params.model_dim, params.model_dim, n_layers=params.rnn_n_layers, bi=params.rnn_bi,
                            dropout=params.rnn_dropout, n_to_1=params.n_to_1)
 
@@ -81,7 +80,6 @@ class Model(nn.Module):
     def forward(self, x, x_len):
         x = self.inp(x) 
         x = self.encoder(x, x_len)
-        x = self.attn(x)
         y = self.out(x)
         activation = self.final_activation(y)
         return activation, x
