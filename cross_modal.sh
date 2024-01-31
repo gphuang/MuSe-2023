@@ -31,7 +31,7 @@
 # - rebuild muse conda env
 # gp is here
 # eval_c1_mimic.sh # done   
-# eval_c2_humor.sh # 27641193 cpu 
+# eval_c2_humor.sh # done
 # eval_c3_affect.sh # done 
 # eval_c4_inversion.sh # done
 
@@ -54,10 +54,10 @@ python compare_systems.py /teamwork/t40511/muse_2023/exp/MuSe-2023-Aalto-models/
 ## 5. Deep learning with biosigs, avfeats, affects
 # derive biosignals with '--predict' in main.py from avfeats for other tasks e.g. humor, mimic
 # derive affects (approval/disappoitment/uncertainty, humor, arousal/valence) with '--predict' in main.py 
-# hyper parameter search
-# bi-directional rnn
-# convolutional recurrent network
-# lstm, attention
+# not essensial (lstm vs. GRU)
+# hyper parameter (grid) search
+# convolutional layer CRNN
+# attention 27942819 AttnRNN
 
 ## 6. Results 
 # analyse_results.py

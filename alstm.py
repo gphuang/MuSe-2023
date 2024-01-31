@@ -12,12 +12,14 @@ from arnn import last_item_from_packed
 LSTM with attention
 """
 class AttnLSTM(nn.Module):
-    def __init__(self, input_size, hidden_size, num_layers):
+    def __init__(self, input_size, hidden_size, num_layers=1, bi=True, dropout=0.2, n_to_1=False):
         super(AttnLSTM, self).__init__()
         self.lstm = nn.LSTM(
             input_size=input_size,
             hidden_size=hidden_size,
             num_layers=num_layers,
+            bidirectional=bi,
+            dropout=dropout,
             batch_first=True)
         self.attn = TemporalAttn(hidden_size=hidden_size)
         self.fc = nn.Linear(hidden_size, 1)
