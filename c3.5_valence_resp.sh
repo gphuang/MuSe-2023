@@ -22,23 +22,25 @@ source activate muse
 
 ### VALENCE
 
+# resp
 for model_dim in 32 128 256; do
 for rnn_n_layers in 2 4 8; do
 for lr in 0.001 0.002 0.005 0.01; do 
 for win_len in 50 100 200 250; do 
 for hop_len in 25 50 100; do 
 for rnn_dropout in 0.1 0.2 0.5 0.9; do 
-python3 main.py --task personalisation --feature resp \
+python3 main.py --task personalisation --feature resp --n_seeds 1 --num_random_samples 500 \
                     --normalize --emo_dim valence  \
-                    --model_dim 256 --rnn_n_layers 4 \
-                    --lr 0.002  --win_len 200 --hop_len 100 \
-                    --rnn_dropout 0.5 \
+                    --model_dim $model_dim --rnn_n_layers $rnn_n_layers \
+                    --lr $lr  --win_len $win_len --hop_len $hop_len \
+                    --rnn_dropout $rnn_dropout \
                     --use_gpu
-python3 main.py --task personalisation --feature resp \
+python3 main.py --task personalisation --feature resp --n_seeds 1 --num_random_samples 500 \
                     --normalize --emo_dim valence  \
-                    --model_dim 256 --rnn_n_layers 4 --rnn_bi\
-                    --lr 0.002  --win_len 200 --hop_len 100 \
-                    --rnn_dropout 0.5 \
+                    --rnn_bi \
+                    --model_dim $model_dim --rnn_n_layers $rnn_n_layers \
+                    --lr $lr  --win_len $win_len --hop_len $hop_len \
+                    --rnn_dropout $rnn_dropout \
                     --use_gpu                   
 done 
 done

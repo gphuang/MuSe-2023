@@ -8,6 +8,7 @@ import config
 
 def main():
     dir_feat = os.path.join(config.BASE_PATH, 'c3_muse_personalisation/feature_segments')
+    dir_label = os.path.join(config.BASE_PATH, 'c3_muse_personalisation/label_segments')
     dir_biosignals = os.path.join(dir_feat, 'biosignals')
     dir_out = dir_biosignals + '_normalized'
     if not os.path.exists(dir_out):
@@ -25,9 +26,9 @@ def main():
         df[['ECG','resp','BPM']] = std_scaler.fit_transform(df[['ECG','resp','BPM']])
         df.to_csv(os.path.join(dir_out, _csv), index=False)
         for _biosignal in ['ECG','resp','BPM']:
-            _dir = os.path.join(dir_feat, _biosignal) + '_normalized'
+            _dir = os.path.join(dir_label, _biosignal) + '_normalized'
             _df = df[['timestamp','subject_id', _biosignal]]
-            _df = _df.rename(columns={_biosignal: 'value'})
+            _df = _df.rename(columns={_biosignal: 'value'}) 
             _df.to_csv(os.path.join(_dir, _csv), index=False)
     
 if __name__ == '__main__':

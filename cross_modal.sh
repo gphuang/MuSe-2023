@@ -27,6 +27,18 @@
 # - view loss vs. feat, acc. vs. feat
 # - view training history? loss vs. feat, acc. vs. feat
 # - c3.5 hyperparameter grid search for bpm ecg resp for arousal & valence
+# AROUSAL
+# 1k random sampling hyper para search
+# BPM 27833890 # 0.01 lr 27977261
+# ECG 27837924
+# resp 27837934
+# VALENCE
+# 1k random sampling hyper para search
+# BPM 27837980
+# ECG 27837981
+# resp 27837982
+
+
 
 ## 3. Evaluate '--predict' CodaLab
 # - rebuild muse conda env

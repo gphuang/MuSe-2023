@@ -25,6 +25,8 @@ def parse_args():
 
     parser.add_argument('--task', type=str, required=True, choices=TASKS,
                         help=f'Specify the task from {TASKS}.')
+    parser.add_argument('--num_random_samples', type=int, default=0,
+                        help='Specify the number of random samples (int64) e.g. for hyper-para search.')
     parser.add_argument('--feature', required=True,
                         help='Specify the features used (only one).')
     parser.add_argument('--emo_dim', default=AROUSAL, choices=PERSONALISATION_DIMS,
@@ -136,7 +138,16 @@ def main(args):
                 batch_size = args.batch_size if partition == 'train' else (
                     1 if args.task == PERSONALISATION else 2 * args.batch_size)
                 shuffle = True if partition == 'train' else False  # shuffle only for train partition
-                data_loader[partition] = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
+                
+                if args.num_random_samples > 0:
+                    random_sampler = torch.utils.data.RandomSampler(dataset, num_samples=args.num_random_samples)
+                    data_loader[partition] = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
+                                                                     sampler=random_sampler,
+                                                                     num_workers=4,
+                                                                     worker_init_fn=seed_worker,
+                                                                     collate_fn=custom_collate_fn)
+                else:
+                    data_loader[partition] = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
                                                                      num_workers=4,
                                                                      worker_init_fn=seed_worker,
                                                                      collate_fn=custom_collate_fn)
@@ -188,7 +199,16 @@ def main(args):
             batch_size = args.batch_size if partition == 'train' else (
                 1 if args.task == PERSONALISATION else 2 * args.batch_size)
             shuffle = True if partition == 'train' else False  # shuffle only for train partition
-            data_loader[partition] = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
+            
+            if args.num_random_samples > 0:
+                random_sampler = torch.utils.data.RandomSampler(dataset, num_samples=args.num_random_samples)
+                data_loader[partition] = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
+                                                                     sampler=random_sampler,
+                                                                     num_workers=4,
+                                                                     worker_init_fn=seed_worker,
+                                                                     collate_fn=custom_collate_fn)
+            else:
+                data_loader[partition] = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
                                                                  num_workers=4,
                                                                  worker_init_fn=seed_worker,
                                                                  collate_fn=custom_collate_fn)

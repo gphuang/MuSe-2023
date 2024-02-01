@@ -1,4 +1,4 @@
-import random
+import os, random
 import numpy as np
 import pandas as pd
 import torch
@@ -7,32 +7,33 @@ import torch.optim as optim
 from skorch import NeuralNetClassifier
 from sklearn.model_selection import GridSearchCV
 
+import config
+from data_parser import load_data
+from dataset import MuSeDataset
 from model import Model as RNNClassifier
+from main import get_loss_fn, get_eval_fn
+
+# args
+task = 'mimic'
+paths = {
+    'data': os.path.join(config.DATA_FOLDER, task),
+    'features': config.PATH_TO_FEATURES[task],
+    'labels': config.PATH_TO_LABELS[task],
+    'partition': config.PARTITION_FILES[task]
+    }
+
+# custom loss fn
+loss_fn, loss_str = get_loss_fn(task)
+eval_fn, eval_str = get_eval_fn(task)
 
 # load the dataset, split into input (X) and output (y) variables
-dataset = pd.read_csv('/scratch/work/huangg5/elec_e5550_snlp/data/train_2024.csv').to_numpy()
-X = dataset[:,0]
-y = dataset[:,1]
-X = torch.tensor(X, dtype=torch.float32)
-y = torch.tensor(y, dtype=torch.float32).reshape(-1, 1)
-
-# PyTorch classifier
-class PimaClassifier(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.layer = nn.Linear(8, 12)
-        self.act = nn.ReLU()
-        self.output = nn.Linear(12, 1)
-        self.prob = nn.Sigmoid()
-
-    def forward(self, x):
-        x = self.act(self.layer(x))
-        x = self.prob(self.output(x))
-        return x
+data = load_data(task, paths, feature, emo_dim, normalize,
+                     win_len, hop_len, save=True)
+datasets = {partition:MuSeDataset(data, partition) for partition in data.keys()}
 
 # create model with skorch
 model = NeuralNetClassifier(
-    PimaClassifier,
+    RNNClassifier,
     criterion=nn.BCELoss,
     optimizer=optim.Adam,
     verbose=False
