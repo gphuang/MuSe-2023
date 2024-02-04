@@ -142,6 +142,7 @@ def main(args):
                                                                      collate_fn=custom_collate_fn)
 
             model = Model(args)
+            print(model)
 
             print('=' * 50)
             print(f'Training model... [seed {seed}] for at most {args.epochs} epochs')
