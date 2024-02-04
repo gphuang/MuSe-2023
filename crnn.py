@@ -1,79 +1,51 @@
+# https://gist.github.com/spro/c87cc706625b8a54e604fb1024106556
+import torch
 import torch.nn as nn
+from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
 
-# https://github.com/meijieru/crnn.pytorch/blob/master/models/crnn.py
-class BidirectionalLSTM(nn.Module):
-
-    def __init__(self, nIn, nHidden, nOut):
-        super(BidirectionalLSTM, self).__init__()
-
-        self.rnn = nn.LSTM(nIn, nHidden, bidirectional=True)
-        self.embedding = nn.Linear(nHidden * 2, nOut)
-
-    def forward(self, input):
-        recurrent, _ = self.rnn(input)
-        T, b, h = recurrent.size()
-        t_rec = recurrent.view(T * b, h)
-
-        output = self.embedding(t_rec)  # [T * b, nOut]
-        output = output.view(T, b, -1)
-
-        return output
-
+from config import device
 
 class CRNN(nn.Module):
-
-    def __init__(self, imgH, nc, nclass, nh, leakyRelu=False):
+    def __init__(self, d_in, d_out, n_layers=1, bi=True, dropout=0.2, n_to_1=False):
         super(CRNN, self).__init__()
-        assert imgH % 16 == 0, 'imgH has to be a multiple of 16'
+        self.d_in = d_in
+        self.d_out = d_out
+        self.n_layers = n_layers
+        self.d_out = d_out
+        self.n_directions = 2 if bi else 1
+        self.n_to_1 = n_to_1
+        
+        self.c1 = nn.Conv1d(d_in, d_out, 1)
+        self.c2 = nn.Conv1d(d_out, d_out,1)
+        self.relu = nn.ReLU(inplace=True)
+        self.gru = nn.GRU(d_out, d_out, bidirectional=bi, num_layers=n_layers, dropout=dropout)
 
-        ks = [3, 3, 3, 3, 3, 3, 2]
-        ps = [1, 1, 1, 1, 1, 1, 0]
-        ss = [1, 1, 1, 1, 1, 1, 1]
-        nm = [64, 128, 256, 256, 512, 512, 512]
+    def forward(self, x, x_len):
+        # Turn ( batch_size x seq_len x input_size) into (batch_size x input_size x seq_len) for CNN
+        x = x.transpose(1, 2)
+        
+        # Run through Conv1d layers
+        x = self.c1(x)
+        x = self.relu(x)
+        x = self.c2(x)
+        x = self.relu(x)
+        # Turn (batch_size x hidden_size x seq_len) back into (batch_size x seq_len x hidden_size) for RNN
+        x = x.transpose(1, 2)
+        x = F.tanh(x)
+        
+        # x_packed = pack_padded_sequence(x, x_len.cpu(), batch_first=True, enforce_sorted=False)
+        rnn_enc = self.gru(x)
 
-        cnn = nn.Sequential()
+        if self.n_to_1:
+            # hiddenstates, h_n, only last layer
+            return last_item_from_packed(rnn_enc[0], x_len)
+            # batch_size = x.shape[0]
+            # h_n = h_n.view(self.n_layers, self.n_directions, batch_size, self.d_out) # (NL, ND, BS, dim)
+            # last_layer = h_n[-1].permute(1,0,2) # (BS, ND, dim)
+            # x_out = last_layer.reshape(batch_size, self.n_directions * self.d_out) # (BS, ND*dim)
 
-        def convRelu(i, batchNormalization=False):
-            nIn = nc if i == 0 else nm[i - 1]
-            nOut = nm[i]
-            cnn.add_module('conv{0}'.format(i),
-                           nn.Conv2d(nIn, nOut, ks[i], ss[i], ps[i]))
-            if batchNormalization:
-                cnn.add_module('batchnorm{0}'.format(i), nn.BatchNorm2d(nOut))
-            if leakyRelu:
-                cnn.add_module('relu{0}'.format(i),
-                               nn.LeakyReLU(0.2, inplace=True))
-            else:
-                cnn.add_module('relu{0}'.format(i), nn.ReLU(True))
+        else:
+            x_out = rnn_enc[0]
+            #? x_out = pad_packed_sequence(x_out, total_length=x.size(1), batch_first=True)[0]
 
-        convRelu(0)
-        cnn.add_module('pooling{0}'.format(0), nn.MaxPool2d(2, 2))  # 64x16x64
-        convRelu(1)
-        cnn.add_module('pooling{0}'.format(1), nn.MaxPool2d(2, 2))  # 128x8x32
-        convRelu(2, True)
-        convRelu(3)
-        cnn.add_module('pooling{0}'.format(2),
-                       nn.MaxPool2d((2, 2), (2, 1), (0, 1)))  # 256x4x16
-        convRelu(4, True)
-        convRelu(5)
-        cnn.add_module('pooling{0}'.format(3),
-                       nn.MaxPool2d((2, 2), (2, 1), (0, 1)))  # 512x2x16
-        convRelu(6, True)  # 512x1x16
-
-        self.cnn = cnn
-        self.rnn = nn.Sequential(
-            BidirectionalLSTM(512, nh, nh),
-            BidirectionalLSTM(nh, nh, nclass))
-
-    def forward(self, input):
-        # conv features
-        conv = self.cnn(input)
-        b, c, h, w = conv.size()
-        assert h == 1, "the height of conv must be 1"
-        conv = conv.squeeze(2)
-        conv = conv.permute(2, 0, 1)  # [w, b, c]
-
-        # rnn features
-        output = self.rnn(conv)
-
-        return output
+        return x_out
