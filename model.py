@@ -43,8 +43,6 @@ class Model(nn.Module):
         print(x.shape)
         y = self.out(x)
         print(x.shape)
-        import sys
-        sys.exit(0)
         activation = self.final_activation(y)
         return activation, x
 
