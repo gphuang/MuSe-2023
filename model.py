@@ -23,7 +23,10 @@ class Model(nn.Module):
 
         self.inp = nn.Linear(params.d_in, params.model_dim, bias=False)
 
-        self.encoder = CRNN(params.model_dim, params.model_dim, n_layers=params.rnn_n_layers, bi=params.rnn_bi,
+        myModel = RNN()
+        if params.model_type == 'CRNN':
+            myModel = CRNN()
+        self.encoder = myModel(params.model_dim, params.model_dim, n_layers=params.rnn_n_layers, bi=params.rnn_bi,
                            dropout=params.rnn_dropout, n_to_1=params.n_to_1)
 
         d_rnn_out = params.model_dim * 2 if params.rnn_bi and params.rnn_n_layers > 0 else params.model_dim
