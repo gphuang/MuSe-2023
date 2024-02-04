@@ -18,7 +18,7 @@ python3 main.py --task personalisation --feature BPM \
                     --model_type CRNN \
                     --model_dim 256 --rnn_n_layers 2 \
                     --lr 0.002 --win_len 25 --hop_len 5 \
-                    --rnn_dropout 0.5 \
+                    --rnn_dropout 0.5 --cache \
                     --use_gpu
 
                 
