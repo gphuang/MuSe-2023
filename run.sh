@@ -16,8 +16,8 @@ source activate muse
 python3 main.py --task personalisation --feature BPM \
                     --emo_dim physio-arousal \
                     --model_type CRNN \
-                    --model_dim 256 --rnn_n_layers 4 \
-                    --lr 0.001 --win_len 25 --hop_len 10 \
+                    --model_dim 256 --rnn_n_layers 2 \
+                    --lr 0.002 --win_len 25 --hop_len 5 \
                     --rnn_dropout 0.5 \
                     --use_gpu
 
