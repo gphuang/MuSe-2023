@@ -56,7 +56,7 @@ python compare_systems.py /teamwork/t40511/muse_2023/exp/MuSe-2023-Aalto-models/
 # derive affects (approval/disappoitment/uncertainty, humor, arousal/valence) with '--predict' in main.py 
 # hyper parameter search
 # bi-directional rnn lstm gru
-# convolution (crnn) 
+# convolution (crnn)  28073077
 # attention 
 
 ## 6. Results 
