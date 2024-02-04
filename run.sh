@@ -11,20 +11,13 @@ module load miniconda
 
 source activate muse 
 
-# rerun missing resp
+# add cnn layer
 
-python3 personalisation.py --model_id RNN_2024-01-24-15-28_[resp]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
-                --normalize --checkpoint_seed 103 \
-                --emo_dim physio-arousal --lr 0.002 \
-                --early_stopping_patience 10 \
-                --epochs 100 --win_len 10 --hop_len 5 \
-                --use_gpu
-                
-python3 personalisation.py --model_id RNN_2024-01-24-15-31_[resp]_[valence]_[256_4_False_64]_[0.002_256] \
-                --normalize --checkpoint_seed 103 \
-                --emo_dim valence --lr 0.001 \
-                --early_stopping_patience 10 \
-                --epochs 100 --win_len 20 --hop_len 10 \
-                --use_gpu
+python3 main.py --task personalisation --feature BPM \
+                    --emo_dim physio-arousal \
+                    --model_dim 256 --rnn_n_layers 4 \
+                    --lr 0.001 --win_len 25 --hop_len 10 \
+                    --rnn_dropout 0.5 \
+                    --use_gpu
 
                 
