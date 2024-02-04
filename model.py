@@ -26,7 +26,7 @@ class Model(nn.Module):
         # TODO
         # CRNN
 
-        self.encoder = RNN(params.model_dim, params.model_dim, n_layers=params.rnn_n_layers, bi=params.rnn_bi,
+        self.encoder = CRNN(params.model_dim, params.model_dim, n_layers=params.rnn_n_layers, bi=params.rnn_bi,
                            dropout=params.rnn_dropout, n_to_1=params.n_to_1)
         d_rnn_out = params.model_dim * 2 if params.rnn_bi and params.rnn_n_layers > 0 else params.model_dim
         self.out = OutLayer(d_rnn_out, params.d_fc_out, params.n_targets, dropout=params.linear_dropout)
