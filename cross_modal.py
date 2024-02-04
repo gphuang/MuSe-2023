@@ -56,7 +56,7 @@ python compare_systems.py /teamwork/t40511/muse_2023/exp/MuSe-2023-Aalto-models/
 # derive affects (approval/disappoitment/uncertainty, humor, arousal/valence) with '--predict' in main.py 
 # hyper parameter search
 # bi-directional rnn gru lstm
-# convolutional recurrent network (crnn28076081) (rnn28076080)
+# convolutional recurrent network (crnn28076081) (rnn 28076102)
 # attention
 
 ## 6. Results 
