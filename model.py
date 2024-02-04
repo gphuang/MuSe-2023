@@ -28,6 +28,7 @@ class Model(nn.Module):
             myModel = CRNN(params.model_dim, params.model_dim)
         else:
             myModel = RNN(params.model_dim, params.model_dim)
+            import sys
             sys.exit(0)
         self.encoder = myModel(n_layers=params.rnn_n_layers, bi=params.rnn_bi,
                            dropout=params.rnn_dropout, n_to_1=params.n_to_1)
