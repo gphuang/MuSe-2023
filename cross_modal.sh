@@ -29,7 +29,7 @@
 # - c3.5 hyperparameter grid search for bpm ecg resp for arousal & valence
 # AROUSAL
 # 1k random sampling hyper para search
-# BPM 27833890 # 0.01 lr 27977261
+# BPM 27833890 # 0.01 lr 27977261 # 0.1 droput 27977901 # rnn_dim 512 BPM_normalized 27986300  # 10ms win 5ms hop 27988512 #raw 28023635
 # ECG 27837924
 # resp 27837934
 # VALENCE

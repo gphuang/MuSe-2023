@@ -11,10 +11,10 @@ module load miniconda
 
 source activate muse
 
-python3 main.py --task personalisation --feature BPM \
+python3 main.py --task personalisation --feature BPM_raw \
                     --emo_dim physio-arousal \
                     --model_dim 256 --rnn_n_layers 4 \
-                    --lr 0.01 --win_len 50 --hop_len 25 \
+                    --lr 0.001 --win_len 25 --hop_len 10 \
                     --rnn_dropout 0.5 \
                     --use_gpu
                 
