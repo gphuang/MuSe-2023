@@ -33,6 +33,8 @@ class Model(nn.Module):
         self.final_activation = ACTIVATION_FUNCTIONS[params.task]()
 
     def forward(self, x, x_len):
+        print(x_len.shape)
+        print(x_len)
         print(x.shape)
         x = self.inp(x)
         print(x.shape)
