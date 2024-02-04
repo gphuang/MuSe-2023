@@ -2,6 +2,7 @@
 import torch
 import torch.nn as nn
 from torch.nn.utils.rnn import pad_packed_sequence, pack_padded_sequence
+import torch.nn.functional as F
 
 from config import device
 
