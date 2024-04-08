@@ -7,6 +7,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # adjust your paths here.
 BASE_PATH = '/scratch/elec/puhe/c/muse_2023/' 
+# todo: '/teamwork/t40511/muse_2023/'
 # os.path.join(Path(__file__).parent.parent, 'MuSe-2023', 'packages')
 
 RNN = 'RNN'

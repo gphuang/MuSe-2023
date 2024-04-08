@@ -1,19 +1,20 @@
 #!/bin/bash
-#SBATCH --time=05:59:59
-#SBATCH --mem=250G
+#SBATCH --time=10:30:00
+#SBATCH --mem-per-cpu=4G
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
-#SBATCH --output=logs/c3_1st_step_%A.out
-#SBATCH --job-name=muse_c3
+#SBATCH --output=logs/c5_1st_step_%A.out
+#SBATCH --job-name=muse_c5_1
 #SBATCH -n 1
 
 module load miniconda
 
-source activate pytorch-env
+source activate muse
 
 ### avfeats & biosignals for AROUSAL & VALENCE. avfeats same as 'personalisation_1st_step_best.sh'
 
 ### AROUSAL
+
 # egemaps
 python3 main.py --task personalisation --feature egemaps --normalize \
             --emo_dim physio-arousal --model_dim 256 --rnn_n_layers 4 --lr 0.002 \
@@ -47,35 +48,36 @@ python3 main.py --task personalisation --feature facenet \
 # BPM
 python3 main.py --task personalisation --feature BPM \
                     --normalize --emo_dim physio-arousal \
-                    --model_dim 256 --rnn_n_layers 2 \
-                    --lr 0.002 --win_len 25 --hop_len 10 \
+                    --model_dim 256 --rnn_n_layers 4 \
+                    --lr 0.002 --win_len 50 --hop_len 25 \
                     --rnn_dropout 0.5 \
                     --use_gpu
 
 # ECG
 python3 main.py --task personalisation --feature ECG \
                     --normalize --emo_dim physio-arousal \
-                    --model_dim 256 --rnn_n_layers 2 \
-                    --lr 0.002 --win_len 25 --hop_len 10 \
+                    --model_dim 256 --rnn_n_layers 4 \
+                    --lr 0.002 --win_len 50 --hop_len 25 \
                     --rnn_dropout 0.5 \
                     --use_gpu
 # resp
 python3 main.py --task personalisation --feature resp \
                     --normalize --emo_dim physio-arousal \
-                    --model_dim 256 --rnn_n_layers 2 \
-                    --lr 0.002 --win_len 25 --hop_len 10 \
+                    --model_dim 256 --rnn_n_layers 4 \
+                    --lr 0.002 --win_len 50 --hop_len 25 \
                     --rnn_dropout 0.5 \
                     --use_gpu
 
 # biosignals
 python3 main.py --task personalisation --feature biosignals \
                     --normalize --emo_dim physio-arousal \
-                    --model_dim 256 --rnn_n_layers 2 \
-                    --lr 0.002 --win_len 25 --hop_len 10 \
+                    --model_dim 256 --rnn_n_layers 4 \
+                    --lr 0.002 --win_len 50 --hop_len 25 \
                     --rnn_dropout 0.5 \
                     --use_gpu                     
 
 ### VALENCE
+
 # egemaps
 python3 main.py --task personalisation --feature egemaps --normalize \
             --emo_dim valence --model_dim 256 --rnn_n_layers 4 --lr 0.002  \
@@ -109,32 +111,32 @@ python3 main.py --task personalisation --feature facenet \
 # BPM
 python3 main.py --task personalisation --feature BPM \
                     --normalize --emo_dim valence  \
-                    --model_dim 256 --rnn_n_layers 1 \
-                    --lr 0.01  --win_len 100 --hop_len 20 \
+                    --model_dim 256 --rnn_n_layers 4 \
+                    --lr 0.002  --win_len 200 --hop_len 100 \
                     --rnn_dropout 0.5 \
                     --use_gpu
 
 # ECG                
 python3 main.py --task personalisation --feature ECG \
                     --normalize --emo_dim valence  \
-                    --model_dim 256 --rnn_n_layers 2 \
-                    --lr 0.002  --win_len 25 --hop_len 10 \
+                    --model_dim 256 --rnn_n_layers 4 \
+                    --lr 0.002  --win_len 200 --hop_len 100 \
                     --rnn_dropout 0.5 \
                     --use_gpu
 
 # resp
 python3 main.py --task personalisation --feature resp \
                     --normalize --emo_dim valence  \
-                    --model_dim 256 --rnn_n_layers 2 \
-                    --lr 0.002  --win_len 25 --hop_len 10 \
+                    --model_dim 256 --rnn_n_layers 4 \
+                    --lr 0.002  --win_len 200 --hop_len 100 \
                     --rnn_dropout 0.5 \
                     --use_gpu
 
 # biosignals
 python3 main.py --task personalisation --feature biosignals \
                     --normalize --emo_dim valence  \
-                    --model_dim 256 --rnn_n_layers 2 \
-                    --lr 0.002  --win_len 25 --hop_len 10 \
+                    --model_dim 256 --rnn_n_layers 4 \
+                    --lr 0.002  --win_len 200 --hop_len 100 \
                     --rnn_dropout 0.5 \
                     --use_gpu
 
