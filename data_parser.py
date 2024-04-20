@@ -207,7 +207,6 @@ def load_personalisation_subject(feature, subject_id, partition, emo_dim, normal
         sample_data = sample_data.dropna()
     # else:
     #     sample_data = sample_data.fillna(0)
-    print(feature_file)
     sample_data['timestamp'] = timestamps
 
     if apply_segmentation:
