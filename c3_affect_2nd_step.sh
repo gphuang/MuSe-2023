@@ -61,7 +61,7 @@ python3 personalisation.py --model_id RNN_2024-01-03-12-42_[ECG]_[physio-arousal
                 --normalize --checkpoint_seed 104 \
                 --emo_dim physio-arousal --lr 0.002 \
                 --early_stopping_patience 10 \
-                --epochs 100 --win_len 10 --hop_len 5 \
+                --epochs 100 --win_len 50 --hop_len 25 \
                 --use_gpu
 
 # resp

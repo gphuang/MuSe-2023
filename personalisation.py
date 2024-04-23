@@ -15,6 +15,7 @@ import torch
 from torch.utils.data import DataLoader
 
 import config
+from config import MODEL_TYPES, RNN, CRNN
 from config import AROUSAL, PERSONALISATION_DIMS, PERSONALISATION
 from data_parser import load_personalisation_data
 from dataset import MuSeDataset, custom_collate_fn
@@ -38,6 +39,8 @@ def parse_args():
                         help='Specify the window length for segmentation (default: 200 frames).')
     parser.add_argument('--hop_len', type=int, default=10,
                         help='Specify the hop length to for segmentation (default: 100 frames).')
+    parser.add_argument('--model_type', type=str, default=RNN,
+                        help=f'Specify the neural model architecture (default: {RNN}).')
     parser.add_argument('--epochs', type=int, default=100,
                         help='Specify the number of epochs (default: 100).')
     parser.add_argument('--batch_size', type=int, default=256,

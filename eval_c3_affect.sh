@@ -52,6 +52,10 @@ python3 main.py --task personalisation \
 python3 main.py --task personalisation \
         --eval_model RNN_2024-01-03-12-42_[ECG]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
         --feature ECG --normalize --predict --eval_seed 104 --use_gpu  
+
+python3 main.py --task personalisation \
+        --eval_model RNN_2024-04-19-13-13_[mfcc-ecg]_[valence]_[128_2_True_64]_[0.001_256] \
+        --feature mfcc-ecg --normalize --predict --eval_seed 103 --use_gpu  
  
 # resp
 python3 main.py --task personalisation \
@@ -64,9 +68,7 @@ python3 main.py --task personalisation \
         --feature biosignals --normalize --predict --eval_seed 104 --use_gpu  
  
 
-### VALENCE 
-
-### VALENCE 
+### VALENCE  
 
 # egemaps
 python3 main.py --task personalisation \

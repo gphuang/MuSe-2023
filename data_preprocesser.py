@@ -10,8 +10,9 @@ def parse_args():
 
     parser = argparse.ArgumentParser(description='MuSe 2023.')
 
-    parser.add_argument('--feat_extractor', type=str, default='mfcc', choices=['mfcc', 'egemaps'],
+    parser.add_argument('--feat_extractor', type=str, default='mfcc', choices=['melspec', 'mfcc', 'egemaps'],
                         help=f'Specify the feat.')
+    
     args = parser.parse_args()
     return args
 
@@ -40,7 +41,7 @@ def main(args):
     dir_in = '/scratch/elec/puhe/c/muse_2023/c3_muse_personalisation/raw_data'
     dir_out = '/scratch/elec/puhe/c/muse_2023/c3_muse_personalisation/feature_segments'
     bio_signals = ['BPM', 'resp'] #  ['BPM', 'ECG', 'resp']
-    feat_extractor = args.feat_extractor
+    feat_extractor = args.feat_extractor # ['melspec', 'mfcc', 'egemaps']
     sampling_rate = 1000 # input
     hop_len = 500 # output
     win_len = 1000 
@@ -48,7 +49,7 @@ def main(args):
     # print(len(fnames)) 97
     for _signal in bio_signals:
         print(f'Processing {_signal}')
-        _dir_out = os.path.join(dir_out, feat_extractor + '_' + _signal.lower())
+        _dir_out = os.path.join(dir_out, feat_extractor + '-' + _signal.lower()) # MUSE uses '-' in feat name string. 
         if not os.path.exists(_dir_out):
             os.makedirs(_dir_out)
         for _fname in fnames:
@@ -58,6 +59,9 @@ def main(args):
             in_fname = os.path.join(dir_in, _signal, _fname + '.csv')
             df = pd.read_csv(in_fname)            
             data = df[_signal].to_numpy()
+            if feat_extractor == 'melspec':
+                melspecs = librosa.feature.melspectrogram(y=data, sr=sampling_rate, n_mels=128, hop_length=hop_len) # (128, seq_len)
+                feats = melspecs.T # (seq_len, n_mel)
             if feat_extractor == 'mfcc':
                 mfccs = librosa.feature.mfcc(y=data, sr=sampling_rate, n_mfcc=20, hop_length=hop_len) # (20, seq_len)
                 feats = mfccs.T # (seq_len, n_mfcc)
