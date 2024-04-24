@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=48:59:59
+#SBATCH --time=00:09:59
 #SBATCH --mem=250G
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
@@ -12,9 +12,13 @@ module load cuda/11.8
 
 source activate pytorch-env
 
-python data_preprocesser.py --feat_extractor melspec
+python data_preprocesser.py --feat_extractor hubert
 
-feature='melspec-resp' # 'melspec-ecg' # 'egemaps-resp' # 'mfcc-resp' # 'mfcc-ecg' # 'egemaps-ecg' # 
+# feature='ECG' #'melspec-ecg' #'mfcc-ecg' #'egemaps-ecg' #    
+# for feature in resp melspec-resp mfcc-resp egemaps-resp 
+# for feature in BPM melspec-bpm mfcc-bpm egemaps-bpm
+for feature in hubert-wav # egemaps-wav melspec-wav mfcc-wav
+do 
 for emo_dim in physio-arousal valence
 do 
 for model_dim in 512 256 128
@@ -27,11 +31,12 @@ for win_len in 200 100 50
 do 
 for hop_len in 25 10
 do
-echo $emo_dim $model_dim $rnn_n_layers $lr  $win_len $hop_len 
+echo $feature $emo_dim $model_dim $rnn_n_layers $lr  $win_len $hop_len 
 /usr/bin/time -v python3 main.py --task personalisation --feature $feature --normalize \
             --emo_dim $emo_dim --model_dim $model_dim --rnn_n_layers $rnn_n_layers \
             --lr $lr --win_len $win_len  --hop_len $hop_len \
             --model_type RNN --rnn_bi --rnn_dropout 0.5 --use_gpu
+done
 done
 done
 done
@@ -62,17 +67,31 @@ done
 # RNN_2024-04-22-09-45_[egemaps-ecg]_[physio-arousal]_[256_3_True_64]_[0.005_256] win_len 50  hop_len 25 0.4821 ***  
 # RNN_2024-04-22-18-18_[egemaps-ecg]_[valence]_[128_3_True_64]_[0.005_256]        0.3869
 # loop 48hrs +melspec
-# RNN_2024-04-23 31027956 31027955 31040231
-# c3_ecg eval
+# RNN_2024-04-23 
 
-## RESP
+## resp
 # pilot 
 # RNN_2024-04-18-15-20 resp valence 0.2278 
 # RNN_2024-04-18-15-27 mfcc_resp valence 0.1465
-# loop 48hrs +melspec
-# RNN_2024-04-22 31027958 31027957 31040236
+# loop 48hrs
+# RNN_2024-04-23 31041218
 
-## feature fusion
+## BPM
+# loop 48hrs
+# RNN_2024-04-23 31041249
+
+## wav
+# loop
+# RNN_2024-04-24 31071330
+
+## hubert-large-superb-er
+# loop
+# RNN_2024-04-24 31080407
+
+## best feature fusion
+# RNN_2024-04-24-02-02_[mfcc-ecg]_[valence]_[256_4_True_64]_[0.001_256] ID/Seed 105 0.5395 
+# RNN_2024-04-24-01-16_[melspec-ecg]_[physio-arousal]_[128_2_True_64]_[0.005_256] ID/Seed 105 0.5427
+# 
 # naive
 # siamese
 

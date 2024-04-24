@@ -21,13 +21,13 @@ python3 main.py --task personalisation \
 
 python3 personalisation.py --model_id RNN_2024-01-03-12-42_[ECG]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
                 --normalize --checkpoint_seed 104 \
-                --emo_dim physio-arousal --lr 0.002 \
+                --emo_dim physio-arousal --lr 0.0005 \
                 --early_stopping_patience 10 \
-                --epochs 100 --win_len 50 --hop_len 25 \
+                --epochs 100 --win_len 10 --hop_len 5 \
                 --use_gpu
 
 python3 personalisation.py --model_id RNN_2024-01-03-12-42_[ECG]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
-        --eval_personalised 104_personalised_x \
+        --eval_personalised 104_personalised_2024-04-23-15-39-38  \
         --emo_dim physio-arousal
 
 ## ECG-mfcc-egemaps

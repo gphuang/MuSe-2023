@@ -32,7 +32,7 @@ class Model(nn.Module):
 
     def forward(self, x, x_len):
         x = self.inp(x)
-        x = self.rnn(x, x_len) # encoder
+        x = self.rnn(x, x_len) # rnn
         y = self.out(x)
         activation = self.final_activation(y)
         return activation, x
@@ -66,7 +66,6 @@ class CRNNModel(nn.Module):
         """
         x: ([batch_size, win_len (time_step), 1])
         """        
-        # eval does not pass self.params?
         x = x.transpose(1, 2)
         x = self.conv(x)                  # ([batch_size, hidden_size, win_len])
         x1 = self.maxpool(x)
