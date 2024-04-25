@@ -32,7 +32,7 @@ def segment_ndarray(sample:np.ndarray, win_len, hop_len, padding=False):
     tbd: spkr_train _devel _test merge, extract, and re-split?
     """
     segmented_sample = []
-    if len(sample) > win_len and padding:
+    if padding:
         sample = np.pad(sample, (win_len//2, win_len//2), 'edge')
 
     for s_idx in range(0, len(sample), hop_len):
@@ -59,36 +59,37 @@ def main(args):
         model_name = "superb/hubert-large-superb-er"  
         model = HubertForSequenceClassification.from_pretrained(model_name)
         feature_extractor = Wav2Vec2FeatureExtractor.from_pretrained(model_name)
+        model.to(device)
 
     for _signal in _signals:
         print(f'Processing {_signal}')
         _dir_out = os.path.join(dir_out, feat_extractor + '-' + _signal.lower()) # MUSE uses '-' in feat name string. 
         if not os.path.exists(_dir_out):
             os.makedirs(_dir_out)
-        for _fname in ['10', '54_train']:# fnames:
+        for _fname in fnames: # ['10', '54_train']: #
             print(f'Speaker id: {_fname}')
             subject_id = _fname.split('_')[0]
             out_fname = os.path.join(_dir_out, _fname + '.csv')
             in_fname = os.path.join(dir_in, _signal, _fname + _ext)
             if _ext == '.csv':
-                sampling_rate = 1000 # biosignal input
+                sampling_rate = 1000 # biosignal 1khz
                 df = pd.read_csv(in_fname)            
                 data = df[_signal].to_numpy()
             if _ext == '.wav':
-                data, sampling_rate = librosa.load(in_fname, sr=16000) # specific for hubert pretrained model
+                data, sampling_rate = librosa.load(in_fname) # audio wav input 22050hz
             if feat_extractor == 'hubert':
+                data, sampling_rate = librosa.load(in_fname, sr=16000) # specific for hubert pretrained model
                 # slicing
-                samples = segment_ndarray(data, win_len=sampling_rate, hop_len=sampling_rate//2)
+                samples = segment_ndarray(data, win_len=sampling_rate, hop_len=sampling_rate//2-1)
                 _feats = []
                 for i, segment in enumerate(samples):
                     inputs = feature_extractor(segment, sampling_rate=sampling_rate, padding=True, return_tensors="pt")
                     inputs = {key: inputs[key].to(device).float() for key in inputs}
                     logits = model(**inputs).logits # (n_emo_class,)
-                    _feats.append(logits.detach().numpy().squeeze())
+                    _feats.append(logits.cpu().detach().numpy().squeeze())
                 feats = np.asarray(_feats) # (seq_len, n_emo_class)
                 #print(feats.shape) 
                 # sys.exit(0)
-
             if feat_extractor == 'melspec':
                 melspecs = librosa.feature.melspectrogram(y=data, sr=sampling_rate, n_mels=128, hop_length=sampling_rate//2) # (128, seq_len)
                 feats = melspecs.T # (seq_len, n_mel)
@@ -100,16 +101,18 @@ def main(args):
                     feature_set=opensmile.FeatureSet.eGeMAPSv02,
                     feature_level=opensmile.FeatureLevel.Functionals,)
                 # slicing
-                samples = segment_ndarray(data, win_len=sampling_rate, hop_len=sampling_rate//2, padding=True)
+                samples = segment_ndarray(data, win_len=sampling_rate, hop_len=sampling_rate//2-1)
                 _feats = []
                 for i, segment in enumerate(samples):
                     egemaps = smile.process_signal(segment, sampling_rate) # (n_egemaps,)
                     _feats.append(egemaps.values.squeeze()) 
                 feats = np.asarray(_feats)  # (seq_len, n_egemaps)
-            if feats.shape[0] == 1:
-                feats = np.tile(feats,(df.shape[0], 1))
-            else:
-                feats = feats[:-1, :] # remove one window_len e.g. padding from mfcc
+            if _ext == '.csv' and feat_extractor in ['mfcc', 'melspec', 'egemaps']:
+                if feats.shape[0] == 1:
+                    feats = np.tile(feats,(df.shape[0], 1))
+                else:
+                    feats = feats[:-1, :] # remove one window_len e.g. padding from mfcc
+
             col_values = [str(i) for i in range(feats.shape[1])] 
             timestamp = [hop_len*i for i in range(feats.shape[0])] 
             df = pd.DataFrame(data = feats, columns = col_values)
@@ -119,7 +122,9 @@ def main(args):
             df = df[cols]
             df.to_csv(out_fname, index=False)
 
-            """print(df.shape)
+            
+            """print(feats.shape)
+            print(df.shape)
             print(df.head(3))
             _df = pd.read_csv(out_fname)
             print(_df.head(3))
@@ -128,3 +133,16 @@ def main(args):
 if __name__ == '__main__':
     args = parse_args()
     main(args)
+
+# get intermedia layer output. 
+"""
+activation = {}
+def get_activation(name):
+    def hook(model, input, output):
+        activation[name] = output.detach()
+    return hook
+
+model.projector.register_forward_hook(get_activation('projector'))
+output = model(**inputs)
+print(activation['projector'].shape) # torch.Size([1, 6, 256])
+"""

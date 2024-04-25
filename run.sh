@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=00:09:59
+#SBATCH --time=48:59:59
 #SBATCH --mem=250G
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
@@ -17,7 +17,8 @@ python data_preprocesser.py --feat_extractor hubert
 # feature='ECG' #'melspec-ecg' #'mfcc-ecg' #'egemaps-ecg' #    
 # for feature in resp melspec-resp mfcc-resp egemaps-resp 
 # for feature in BPM melspec-bpm mfcc-bpm egemaps-bpm
-for feature in hubert-wav # egemaps-wav melspec-wav mfcc-wav
+# for feature in melspec-wav mfcc-wav # 
+for feature in hubert-wav 
 do 
 for emo_dim in physio-arousal valence
 do 
@@ -66,32 +67,29 @@ done
 # RNN_2024-04-22-16-14_[mfcc-ecg]_[valence]_[256_3_True_64]_[0.005_256]           win_len 200 hop_len 10 0.4338 ***
 # RNN_2024-04-22-09-45_[egemaps-ecg]_[physio-arousal]_[256_3_True_64]_[0.005_256] win_len 50  hop_len 25 0.4821 ***  
 # RNN_2024-04-22-18-18_[egemaps-ecg]_[valence]_[128_3_True_64]_[0.005_256]        0.3869
-# loop 48hrs +melspec
-# RNN_2024-04-23 
+# RNN_2024-04-23 loop 48hrs +melspec
 
 ## resp
 # pilot 
 # RNN_2024-04-18-15-20 resp valence 0.2278 
 # RNN_2024-04-18-15-27 mfcc_resp valence 0.1465
-# loop 48hrs
-# RNN_2024-04-23 31041218
+# RNN_2024-04-23 31041218 loop 48hrs
 
 ## BPM
-# loop 48hrs
-# RNN_2024-04-23 31041249
+# RNN_2024-04-23 31041249 loop 48hrs
 
 ## wav
-# loop
-# RNN_2024-04-24 31071330
+# RNN_2024-04-25 loop 31115044 (egemaps missing 1 hop in _train files, skip egemaps-wav, should be s.a. egemaps)
 
 ## hubert-large-superb-er
-# loop
-# RNN_2024-04-24 31080407
+# RNN_2024-04-25 loop 31115053
 
 ## best feature fusion
 # RNN_2024-04-24-02-02_[mfcc-ecg]_[valence]_[256_4_True_64]_[0.001_256] ID/Seed 105 0.5395 
+# RNN_2023-12-21-09-50_[egemaps]_[valence]_[256_4_False_64]_[0.002_256] ID/Seed 101 0.5620
+# RNN_2024-04-24-01-25_[melspec-ecg]_[physio-arousal]_[128_2_True_64]_[0.005_256] ID/Seed 103 0.5574
 # RNN_2024-04-24-01-16_[melspec-ecg]_[physio-arousal]_[128_2_True_64]_[0.005_256] ID/Seed 105 0.5427
-# 
+
 # naive
 # siamese
 
