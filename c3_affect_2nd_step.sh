@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=48:59:59
+#SBATCH --time=07:59:59
 #SBATCH --mem=250G
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
@@ -11,8 +11,6 @@ module load miniconda
 module load cuda/11.8 
 
 source activate pytorch-env
-
-#### --model_id and --checkpoint_seed must be adapted accordingly
 
 ### AROUSAL
 
@@ -53,30 +51,30 @@ python3 personalisation.py --model_id RNN_2023-12-21-09-46_[facenet]_[physio-aro
                         --win_len 10 --hop_len 5 --use_gpu
 
 # BPM
-python3 personalisation.py --model_id RNN_2024-04-24-06-59_[melspec-bpm]_[physio-arousal]_[512_4_True_64]_[0.001_256] \
+python3 personalisation.py --model_id RNN_2024-04-29-14-02_[melspec-bpm]_[physio-arousal]_[512_4_True_64]_[0.001_256] \
                 --normalize --checkpoint_seed 101 \
                 --emo_dim physio-arousal --lr 0.002 \
                 --early_stopping_patience 10 \
                 --epochs 100 --win_len 20 --hop_len 10 \
                 --use_gpu
 # ECG
-python3 personalisation.py --model_id RNN_2024-04-24-01-25_[melspec-ecg]_[physio-arousal]_[128_2_True_64]_[0.005_256] \
-                --normalize --checkpoint_seed 103 \
+python3 personalisation.py --model_id RNN_2024-04-29-14-18_[melspec-ecg]_[physio-arousal]_[128_2_True_64]_[0.005_256] \
+                --normalize --checkpoint_seed 101 \
                 --emo_dim physio-arousal --lr 0.002 \
                 --early_stopping_patience 10 \
                 --epochs 100 --win_len 20 --hop_len 10 \
                 --use_gpu
 
 # resp
-python3 personalisation.py --model_id RNN_2024-04-23-09-04_[egemaps-resp]_[physio-arousal]_[512_4_True_64]_[0.005_256] \
-                --normalize --checkpoint_seed 105 \
+python3 personalisation.py --model_id RNN_2024-04-29-14-26_[egemaps-resp]_[physio-arousal]_[512_4_True_64]_[0.005_256] \
+                --normalize --checkpoint_seed 101 \
                 --emo_dim physio-arousal --lr 0.002 \
                 --early_stopping_patience 10 \
                 --epochs 100 --win_len 20 --hop_len 10 \
                 --use_gpu
 
 # hubert
-python3 personalisation.py --model_id RNN_2024-04-25-18-16_[hubert-wav]_[physio-arousal]_[512_2_True_64]_[0.005_256] \
+python3 personalisation.py --model_id RNN_2024-04-29-14-31_[hubert-wav]_[physio-arousal]_[512_2_True_64]_[0.005_256] \
                 --normalize --checkpoint_seed 104 \
                 --emo_dim physio-arousal --lr 0.002 \
                 --early_stopping_patience 10 \
@@ -123,7 +121,7 @@ python3 personalisation.py --model_id RNN_2023-12-21-10-19_[facenet]_[valence]_[
                         --win_len 10 --hop_len 5 --use_gpu
 
 # BPM 
-python3 personalisation.py --model_id RNN_2024-04-27-00-41_[melspec-bpm]_[valence]_[128_4_True_64]_[0.005_256].txt \
+python3 personalisation.py --model_id RNN_2024-04-29-14-35_[melspec-bpm]_[valence]_[128_4_True_64]_[0.005_256].txt \
                 --normalize --checkpoint_seed 104 \
                 --emo_dim valence --lr 0.002 \
                 --early_stopping_patience 10 \
@@ -131,7 +129,7 @@ python3 personalisation.py --model_id RNN_2024-04-27-00-41_[melspec-bpm]_[valenc
                 --use_gpu
 
 # ECG
-python3 personalisation.py --model_id RNN_2024-04-24-02-02_[mfcc-ecg]_[valence]_[256_4_True_64]_[0.001_256] \
+python3 personalisation.py --model_id RNN_2024-04-29-14-41_[mfcc-ecg]_[valence]_[256_4_True_64]_[0.001_256] \
                 --normalize --checkpoint_seed 105 \
                 --emo_dim valence --lr 0.002 \
                 --early_stopping_patience 10 \
@@ -139,16 +137,16 @@ python3 personalisation.py --model_id RNN_2024-04-24-02-02_[mfcc-ecg]_[valence]_
                 --use_gpu
 
 # resp
-python3 personalisation.py --model_id RNN_2024-01-24-15-31_[resp]_[valence]_[256_4_False_64]_[0.002_256] \
-                --normalize --checkpoint_seed 103 \
+python3 personalisation.py --model_id RNN_2024-04-29-14-45_[melspec-resp]_[valence]_[256_4_False_64]_[0.002_256] \
+                --normalize --checkpoint_seed 104 \
                 --emo_dim valence --lr 0.002 \
                 --early_stopping_patience 10 \
                 --epochs 100 --win_len 20 --hop_len 10 \
                 --use_gpu
 
 # hubert
-python3 personalisation.py --model_id RNN_2024-04-26-00-37_[hubert-wav]_[valence]_[512_2_True_64]_[0.001_256] \
-                --normalize --checkpoint_seed 102 \
+python3 personalisation.py --model_id RNN_2024-04-29-14-51_[hubert-wav]_[valence]_[512_2_True_64]_[0.001_256] \
+                --normalize --checkpoint_seed 105 \
                 --emo_dim valence --lr 0.002 \
                 --early_stopping_patience 10 \
                 --epochs 100 --win_len 20 --hop_len 10 \

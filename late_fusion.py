@@ -41,7 +41,7 @@ def parse_args():
         assert len(args.model_ids) == len(args.seeds)
     if args.task == PERSONALISATION:
         args.prediction_dirs = [
-            os.path.join(PREDICTION_FOLDER, PERSONALISATION, args.emo_dim, args.model_ids[i], args.personalised[i]) for
+            os.path.join(PREDICTION_FOLDER, PERSONALISATION, 'personalised', args.emo_dim, args.model_ids[i], args.personalised[i]) for
             i in range(len(args.model_ids))]
     else:
         args.prediction_dirs = [os.path.join(PREDICTION_FOLDER, args.task, args.model_ids[i], args.seeds[i]) for i in

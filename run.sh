@@ -18,7 +18,7 @@ for feature in BPM melspec-bpm mfcc-bpm egemaps-bpm
 # for feature in melspec-wav mfcc-wav # 
 # for feature in hubert-wav 
 do 
-for emo_dim in valence # physio-arousal 
+for emo_dim in valence physio-arousal 
 do 
 for model_dim in 512 256 128
 do 
@@ -66,29 +66,36 @@ done
 # RNN_2024-04-22-18-18_[egemaps-ecg]_[valence]_[128_3_True_64]_[0.005_256]        0.3869
 # RNN_2024-04-24-01-25_[melspec-ecg]_[physio-arousal]_[128_2_True_64]_[0.005_256] ID/Seed 103 0.5574
 # RNN_2024-04-24-02-02_[mfcc-ecg]_[valence]_[256_4_True_64]_[0.001_256]           ID/Seed 105 0.5395
+# RNN_2024-04-29-14-18 arousal Seed 101 0.5077 
+# RNN_2024-04-29-14-41 valence Seed 105 0.5103
 
 ## BPM
 # RNN_2024-04-24-06-59_[melspec-bpm]_[physio-arousal]_[512_4_True_64]_[0.001_256] ID/Seed 101 0.4749
 # RNN_2024-04-27-00-41_[melspec-bpm]_[valence]_[128_4_True_64]_[0.005_256]        ID/Seed 104 0.4883
+# RNN_2024-04-29-14-02 arousal Seed 101 0.5026
+# RNN_2024-04-29-14-35 valence Seed 104 0.4883
 
 ## resp
 # RNN_2024-04-23-09-04_[egemaps-resp]_[physio-arousal]_[512_4_True_64]_[0.005_256] ID/Seed 105 0.4438
 # RNN_2024-04-24-21-13_[melspec-resp]_[valence]_[256_4_True_64]_[0.005_256]        ID/Seed 105 0.3990
+# RNN_2024-04-29-14-26 arousal Seed 101 0.1961
+# RNN_2024-04-29-14-45 valence Seed 104 0.2083
 
 ## hubert-large-superb-er
 # RNN_2024-04-25-18-16_[hubert-wav]_[physio-arousal]_[512_2_True_64]_[0.005_256] ID/Seed 104 0.4250
 # RNN_2024-04-26-00-37_[hubert-wav]_[valence]_[512_2_True_64]_[0.001_256]        ID/Seed 102 0.5333 
+# RNN_2024-04-29-14-31 arousal Seed 104 0.4250
+# RNN_2024-04-29-14-51 valence Seed 105 0.5073
 
 ## update c3_affect_1st_step.sh - rename self.rnn back to self.encoder, train best model on c3
-# RNN_2024-04-29 (verify if 'best' results were reproducible.) 31188809 
+# RNN_2024-04-29 (verify if 'best' results were reproducible.) NOT exactly: resp has large variance. 
  
-## personalize (skipped: params. optimization on 60s data.)
-# arousal win_len 20 hop 10, lr 0.002
-# valence win_len 10 hop 5, lr 0.002
+## personalize c3_affect_2nd_step.sh - skipped params. optimization on 60s data 31191365
+# may or maynot have better ccc, if yes, then saved in 'seed_personsalized'?
 
 ## predict
-# RNN_2024-04-24-02-02_[mfcc-ecg]_[valence]_[256_4_True_64]_[0.001_256] ID/Seed 105 0.5395 
-# RNN_2024-04-24-01-25_[melspec-ecg]_[physio-arousal]_[128_2_True_64]_[0.005_256] ID/Seed 103 0.5574
+# on general model 
+# on personalized model after 31191365 done
 
 ## fusion?
 # naive: feature, decision, average across

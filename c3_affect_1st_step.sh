@@ -1,17 +1,16 @@
 #!/bin/bash
-#SBATCH --time=10:30:00
-#SBATCH --mem-per-cpu=4G
+#SBATCH --time=07:59:59
+#SBATCH --mem=250G
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=6
-#SBATCH --output=logs/c5_1st_step_%A.out
-#SBATCH --job-name=muse_c5_1
+#SBATCH --output=logs/%A.out
+#SBATCH --job-name=muse
 #SBATCH -n 1
 
 module load miniconda
+module load cuda/11.8 
 
-source activate muse
-
-### avfeats & biosignals for AROUSAL & VALENCE. avfeats same as 'personalisation_1st_step_best.sh'
+source activate pytorch-env
 
 ### AROUSAL
 
