@@ -46,32 +46,23 @@ python3 main.py --task personalisation --feature facenet \
             --win_len 50 --hop_len 25 --rnn_dropout 0.5 --use_gpu
 
 # BPM
-python3 main.py --task personalisation --feature BPM --normalize \
-            --emo_dim physio-arousal --model_dim 64 --rnn_n_layers 4 --lr 0.005 \
-            --win_len 200 --hop_len 100 --rnn_dropout 0.5 --use_gpu
+python3 main.py --task personalisation --feature melspec-bpm --normalize \
+            --emo_dim physio-arousal --model_dim 512 --rnn_n_layers 4 --lr 0.001 \
+            --win_len 200 --hop_len 10 --rnn_bi --rnn_dropout 0.5 --use_gpu
 
 # ECG
-python3 main.py --task personalisation --feature ECG \
-                    --normalize --emo_dim physio-arousal \
-                    --model_dim 256 --rnn_n_layers 4 \
-                    --lr 0.002 --win_len 50 --hop_len 25 \
-                    --rnn_dropout 0.5 \
-                    --use_gpu
+python3 main.py --task personalisation --feature melspec-ecg --normalize \
+                    --emo_dim physio-arousal --model_dim 128 --rnn_n_layers 2 --lr 0.005 \
+                    --win_len 50 --hop_len 10 --rnn_bi --rnn_dropout 0.5 --use_gpu
 # resp
-python3 main.py --task personalisation --feature resp \
-                    --normalize --emo_dim physio-arousal \
-                    --model_dim 256 --rnn_n_layers 4 \
-                    --lr 0.002 --win_len 50 --hop_len 25 \
-                    --rnn_dropout 0.5 \
-                    --use_gpu
+python3 main.py --task personalisation --feature egemaps-resp --normalize \
+                    --emo_dim physio-arousal --model_dim 512 --rnn_n_layers 4 --lr 0.005 \
+                    --win_len 100 --hop_len 25 --rnn_bi --rnn_dropout 0.5 --use_gpu
 
-# biosignals
-python3 main.py --task personalisation --feature biosignals \
-                    --normalize --emo_dim physio-arousal \
-                    --model_dim 256 --rnn_n_layers 4 \
-                    --lr 0.002 --win_len 50 --hop_len 25 \
-                    --rnn_dropout 0.5 \
-                    --use_gpu                     
+# hubert
+python3 main.py --task personalisation --feature hubert-wav --normalize \
+                    --emo_dim physio-arousal --model_dim 512 --rnn_n_layers 2 --lr 0.005 \
+                    --win_len 200 --hop_len 25 --rnn_bi --rnn_dropout 0.5 --use_gpu                     
 
 ### VALENCE
 
@@ -105,35 +96,23 @@ python3 main.py --task personalisation --feature facenet \
             --emo_dim valence --model_dim 128 --rnn_n_layers 2 --lr 0.005  \
             --win_len 200 --hop_len 100 --rnn_dropout 0. --use_gpu
 
-# BPM
-python3 main.py --task personalisation --feature BPM \
-                    --normalize --emo_dim valence  \
-                    --model_dim 256 --rnn_n_layers 4 \
-                    --lr 0.002  --win_len 200 --hop_len 100 \
-                    --rnn_dropout 0.5 \
-                    --use_gpu
+# BPM 
+python3 main.py --task personalisation --feature melspec-bpm --normalize \
+                    --emo_dim valence --model_dim 128 --rnn_n_layers 4 --lr 0.005  \
+                    --win_len 50 --hop_len 10 --rnn_bi --rnn_dropout 0.5 --use_gpu
 
-# ECG                
-python3 main.py --task personalisation --feature ECG \
-                    --normalize --emo_dim valence  \
-                    --model_dim 256 --rnn_n_layers 4 \
-                    --lr 0.002  --win_len 200 --hop_len 100 \
-                    --rnn_dropout 0.5 \
-                    --use_gpu
+# ECG           
+python3 main.py --task personalisation --feature mfcc-ecg --normalize \
+                    --emo_dim valence --model_dim 256 --rnn_n_layers 4 --lr 0.001 \
+                    --win_len 100 --hop_len 25 --rnn_bi --rnn_dropout 0.5 --use_gpu
 
 # resp
-python3 main.py --task personalisation --feature resp \
-                    --normalize --emo_dim valence  \
-                    --model_dim 256 --rnn_n_layers 4 \
-                    --lr 0.002  --win_len 200 --hop_len 100 \
-                    --rnn_dropout 0.5 \
-                    --use_gpu
+python3 main.py --task personalisation --feature melspec-resp --normalize \
+                    --emo_dim valence --model_dim 256 --rnn_n_layers 4 --lr 0.005 \
+                    --win_len 200 --hop_len 10 --rnn_bi --rnn_dropout 0.5 --use_gpu
 
-# biosignals
-python3 main.py --task personalisation --feature biosignals \
-                    --normalize --emo_dim valence  \
-                    --model_dim 256 --rnn_n_layers 4 \
-                    --lr 0.002  --win_len 200 --hop_len 100 \
-                    --rnn_dropout 0.5 \
-                    --use_gpu
+# hubert
+python3 main.py --task personalisation --feature hubert-wav --normalize \
+                    --emo_dim valence --model_dim 512 --rnn_n_layers 3 --lr 0.001 \
+                    --win_len 100 --hop_len 25 --rnn_bi --rnn_dropout 0.5 --use_gpu
 

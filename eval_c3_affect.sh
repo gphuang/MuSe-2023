@@ -16,7 +16,11 @@ source activate muse
 # egemaps
 python3 main.py --task personalisation \
         --eval_model RNN_2023-12-21-09-06_[egemaps]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
-        --feature egemaps --normalize --predict --eval_seed  101 --cache  --use_gpu  # 
+        --feature egemaps --normalize --predict --eval_seed 101 --use_gpu  
+
+python3 personalisation.py --model_id RNN_2023-12-21-09-06_[egemaps]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
+        --eval_personalised 101_personalised_2024-01-23-12-19-21 \
+        --normalize --emo_dim physio-arousal
 
 # ds
 python3 main.py --task personalisation \
@@ -62,10 +66,7 @@ python3 main.py --task personalisation \
         --eval_model RNN_2024-01-24-15-28_[resp]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
         --feature resp --normalize --predict --eval_seed 103 --use_gpu  
  
-# biosignals
-python3 main.py --task personalisation \
-        --eval_model RNN_2023-12-21-15-02_[biosignals]_[physio-arousal]_[256_4_False_64]_[0.002_256] \
-        --feature biosignals --normalize --predict --eval_seed 104 --use_gpu  
+# hubert  
  
 
 ### VALENCE  
@@ -119,9 +120,6 @@ python3 main.py --task personalisation \
         --eval_model RNN_2024-01-24-15-31_[resp]_[valence]_[256_4_False_64]_[0.002_256] \
         --feature resp --normalize --predict --eval_seed 103 --use_gpu  
 
-# biosignals
-python3 main.py --task personalisation \
-        --eval_model RNN_2023-12-21-15-05_[biosignals]_[valence]_[256_4_False_64]_[0.002_256] \
-        --feature biosignals --normalize --predict --eval_seed 103 --use_gpu  
+# hubert
 
 

@@ -22,7 +22,7 @@ class Model(nn.Module):
 
         self.inp = nn.Linear(params.d_in, params.model_dim, bias=False)
 
-        self.rnn = RNN(params.model_dim, params.model_dim, n_layers=params.rnn_n_layers, bi=params.rnn_bi,
+        self.encoder = RNN(params.model_dim, params.model_dim, n_layers=params.rnn_n_layers, bi=params.rnn_bi,
                            dropout=params.rnn_dropout, n_to_1=params.n_to_1)
 
 
@@ -32,7 +32,7 @@ class Model(nn.Module):
 
     def forward(self, x, x_len):
         x = self.inp(x)
-        x = self.rnn(x, x_len) # rnn
+        x = self.encoder(x, x_len)
         y = self.out(x)
         activation = self.final_activation(y)
         return activation, x
